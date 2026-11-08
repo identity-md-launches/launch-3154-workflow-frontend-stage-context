@@ -1,0 +1,100 @@
+{
+  "basis": "Declared opaque CSS tokens only; not rendered browser contrast.",
+  "pairs": [
+    {
+      "foreground": "text",
+      "background": "page",
+      "colors": [
+        "#202d25",
+        "#f5f5ef"
+      ],
+      "ratio": 13.11,
+      "passed": true
+    },
+    {
+      "foreground": "text",
+      "background": "surface",
+      "colors": [
+        "#202d25",
+        "#ffffff"
+      ],
+      "ratio": 14.35,
+      "passed": true
+    },
+    {
+      "foreground": "muted",
+      "background": "page",
+      "colors": [
+        "#59635c",
+        "#f5f5ef"
+      ],
+      "ratio": 5.7,
+      "passed": true
+    },
+    {
+      "foreground": "muted",
+      "background": "surface",
+      "colors": [
+        "#59635c",
+        "#ffffff"
+      ],
+      "ratio": 6.24,
+      "passed": true
+    },
+    {
+      "foreground": "accent-text",
+      "background": "accent",
+      "colors": [
+        "#d8ee96",
+        "#243f30"
+      ],
+      "ratio": 9.07,
+      "passed": true
+    },
+    {
+      "foreground": "error",
+      "background": "error-bg",
+      "colors": [
+        "#913d33",
+        "#fbe9e4"
+      ],
+      "ratio": 6.12,
+      "passed": true
+    },
+    {
+      "foreground": "error",
+      "background": "surface",
+      "colors": [
+        "#913d33",
+        "#ffffff"
+      ],
+      "ratio": 7.19,
+      "passed": true
+    },
+    {
+      "foreground": "info",
+      "background": "info-bg",
+      "colors": [
+        "#244b73",
+        "#eaf0f6"
+      ],
+      "ratio": 7.85,
+      "passed": true
+    }
+  ],
+  "typeSizes": [
+    13,
+    14,
+    16,
+    20,
+    28,
+    36
+  ],
+  "weights": [
+    400,
+    600,
+    700
+  ],
+  "transitionAll": false,
+  "reducedMotionGuard": true
+}

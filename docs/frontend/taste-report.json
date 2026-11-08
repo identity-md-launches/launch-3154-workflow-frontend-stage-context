@@ -1,0 +1,16 @@
+{
+  "probe": "taste@1",
+  "rendered": false,
+  "checks": [
+    {
+      "name": "render",
+      "passed": false,
+      "exitCode": 1,
+      "output": "Browser startup failed before any page was rendered: Target page, context or browser has been closed (SIGTRAP)."
+    }
+  ],
+  "limitations": [
+    "No viewport, visual, screenshot, overflow, target-size or rendered-contrast result was produced.",
+    "The supplied browser service also failed initialization with Socket path too long."
+  ]
+}

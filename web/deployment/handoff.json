@@ -1,0 +1,119 @@
+{
+  "chainId": 1,
+  "poolKey": {
+    "fee": 12500,
+    "hooks": "0x784ff9a3ac5d88a30bfff6f7f2a270161fbe6000",
+    "currency0": "0xc89131edc1ddf3503d2bd5f7e98a16c1c67fa17b",
+    "currency1": "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7",
+    "tickSpacing": 60
+  },
+  "repoUrl": "https://github.com/identity-md-launches/launch-3149-workflow-contract-stage-context",
+  "version": 1,
+  "launchId": "373c4b35-5d33-4ee5-871d-8fff8e02cf87",
+  "manifest": {
+    "kind": "evm_project",
+    "pool": {
+      "fee": 12500,
+      "tickSpacing": 60,
+      "initialPrice": "79228162514264337593543950336",
+      "pairedCurrency": "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7"
+    },
+    "notes": "(p)IMD on-chain prediction market, Ethereum mainnet, built from SPEC.md. LaunchToken (src/LaunchToken.sol) is the fixed-supply pIMD ERC-20 with no constructor arguments; the factory mints and splits its supply. Five application contracts in SPEC.md section 2 deploy order, every argument address-typed and every constructor nonpayable with no external calls. PimdRegistry(assetAdmin): the asset admin is the admin wallet SPEC.md names, 0x8ad18e99f4c8d8406f9ba8899cf308000518a981; it adds asset versions and periods and may hand its role on; version 1 (IMD) and periods 0-3 are set in the constructor. BoundaryOracle(registry, verifier): the registry just deployed and the fixed mainnet BoundaryProofVerifier 0xa19a97b522cb379c2fb846a4b18589775f674ee9 (stored, not called, at construction). PimdAbove(registry, oracle, admin, owner): the admin wallet creates markets and sets rates within SPEC.md caps; $owner, the launch's owner, is credited every market fee and has no other power. StartOracle(registry, oracle): start prices requested 27 h or later via the IMD oracle INTAKE. PimdSwap2(registry): exact-output swaps along a version's path. PimdMarkets2 (SPEC.md section 6) is not in the accepted tree at this commit (see ADAPTATION.md and README Known limitations), so it is not listed here; a later build that adds it must extend this manifest. No contract receives any of the token supply at launch. Pool: pIMD paired with IMD at the launch policy's values; the deployer derives the opening price from the 2,500 IMD opening market cap.",
+    "token": {
+      "name": "(p)IMD",
+      "symbol": "pIMD",
+      "contract": "LaunchToken",
+      "decimals": 18
+    },
+    "contracts": [
+      {
+        "contract": "PimdRegistry",
+        "constructorArgs": [
+          "0x8ad18e99f4c8d8406f9ba8899cf308000518a981"
+        ]
+      },
+      {
+        "contract": "BoundaryOracle",
+        "constructorArgs": [
+          "$contract:PimdRegistry",
+          "0xa19a97b522cb379c2fb846a4b18589775f674ee9"
+        ]
+      },
+      {
+        "contract": "PimdAbove",
+        "constructorArgs": [
+          "$contract:PimdRegistry",
+          "$contract:BoundaryOracle",
+          "0x8ad18e99f4c8d8406f9ba8899cf308000518a981",
+          "$owner"
+        ]
+      },
+      {
+        "contract": "StartOracle",
+        "constructorArgs": [
+          "$contract:PimdRegistry",
+          "$contract:BoundaryOracle"
+        ]
+      },
+      {
+        "contract": "PimdSwap2",
+        "constructorArgs": [
+          "$contract:PimdRegistry"
+        ]
+      }
+    ]
+  },
+  "contracts": [
+    {
+      "name": "LaunchToken",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "fc4fab013a5168c8b768eb9277ce85fdc9e5b2f94f8e2cd48f4dc0499e4c63d4",
+      "address": "0xc89131edc1ddf3503d2bd5f7e98a16c1c67fa17b",
+      "blockNumber": 26371528,
+      "creationCodeHash": "487efa7d19feb829e223c6d07edec6be88ea6f3e29034301bdcc0a7facc8c7a1"
+    },
+    {
+      "name": "PimdRegistry",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "bf3c500e75451ff5c31f74554ce3110d60d03d1224d8cc4fb5166f68f42e51a9",
+      "address": "0x785c8b3aa9b4dab5a717cbf5d3621549eb1320d2",
+      "blockNumber": 26371528,
+      "creationCodeHash": "8290f76c7721b6e19176342189dfebc619a6db2f51def4261b146025c7c3ff0d"
+    },
+    {
+      "name": "BoundaryOracle",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "5f223442e0b7e6797a2be0ff05c3c67f13efe9654625c79ca3da438269fbbdb0",
+      "address": "0xd31937d81714fa50d20bdc8b77f043e784a5198d",
+      "blockNumber": 26371528,
+      "creationCodeHash": "d0bf989dbbae5b569eb0d405bd6193af5b538f146f176644097864500f6b2ba6"
+    },
+    {
+      "name": "PimdAbove",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "6a28670cf441259ce9c4418a6ab263f5aeb1e475a4f09f32a264b56fcaea343d",
+      "address": "0x8f52c85dba5226e79928907888941ec12a3ecbf6",
+      "blockNumber": 26371528,
+      "creationCodeHash": "a4397f25bbdfcc0c0bd6d6036a537189f0711ff9449b5843debc7e519d56c21f"
+    },
+    {
+      "name": "StartOracle",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "43a7bd0559914b8253b86bd65e5483ed4417ce8f824db19b6784a301cf20f339",
+      "address": "0x26fabc0cb123b4014e7fe0e102691cac352ec0a0",
+      "blockNumber": 26371528,
+      "creationCodeHash": "7bb8ddcf24e666385839dd4e5ba820a033fa635c265b5340669c27c6f6d77cb6"
+    },
+    {
+      "name": "PimdSwap2",
+      "txHash": "0xdf4e3c3845c7c5fcaf2d96c8843a7d25b01f722fd43cba5540afce4561abab23",
+      "abiHash": "53da1d2bfcd98855a5eebd50918686788edbe16b5c714de452fa1c03a42ba4c6",
+      "address": "0xab901e99d5853486bbd41b4308f306799108199f",
+      "blockNumber": 26371528,
+      "creationCodeHash": "f73c2573e40e0292495b7e3e4e85f7edcda8f19f1cbe82f06a2e3031e9b4c419"
+    }
+  ],
+  "sourceCommit": "5a2c74702c5b46634f19da467ba344ac814ff69b",
+  "abiInstructions": "Build ABIs from this exact source commit; compare canonicalKeccak(abi) with abiHash. Verify deployed code on the stated chain before enabling transactions.",
+  "attestationHash": "ce9198d4f55de296d5ae16cc2edc7d85eca485253418e45d99bd5f1fb29eb5f4"
+}

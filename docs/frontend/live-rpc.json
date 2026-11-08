@@ -1,0 +1,115 @@
+{
+  "at": "2026-11-08T17:40:56.633Z",
+  "readOnly": true,
+  "sourceCommit": "5a2c74702c5b46634f19da467ba344ac814ff69b",
+  "results": [
+    {
+      "url": "https://ethereum-rpc.publicnode.com",
+      "chainId": 1,
+      "contracts": [
+        {
+          "name": "LaunchToken",
+          "address": "0xc89131edc1ddf3503d2bd5f7e98a16c1c67fa17b",
+          "codeBytes": 1089
+        },
+        {
+          "name": "PimdRegistry",
+          "address": "0x785c8b3aa9b4dab5a717cbf5d3621549eb1320d2",
+          "codeBytes": 4781
+        },
+        {
+          "name": "BoundaryOracle",
+          "address": "0xd31937d81714fa50d20bdc8b77f043e784a5198d",
+          "codeBytes": 16990
+        },
+        {
+          "name": "PimdAbove",
+          "address": "0x8f52c85dba5226e79928907888941ec12a3ecbf6",
+          "codeBytes": 18521
+        },
+        {
+          "name": "StartOracle",
+          "address": "0x26fabc0cb123b4014e7fe0e102691cac352ec0a0",
+          "codeBytes": 12008
+        },
+        {
+          "name": "PimdSwap2",
+          "address": "0xab901e99d5853486bbd41b4308f306799108199f",
+          "codeBytes": 5969
+        }
+      ],
+      "above": {
+        "marketCount": "0",
+        "admin": "0x8Ad18E99F4C8d8406f9Ba8899CF308000518A981",
+        "owner": "0x3c587Eff6c96eAcF7E3dcC2CFf6416161386E48C",
+        "takerRate": "500",
+        "makerRate": "100",
+        "registry": "0x785c8b3aA9B4dAB5a717Cbf5D3621549eB1320d2",
+        "oracle": "0xD31937D81714fa50d20BdC8b77F043e784a5198D"
+      },
+      "assetCount": "1",
+      "periodCount": "4",
+      "quote": {
+        "input": "1 IMD",
+        "output": "388781.173762100528628734 pIMD",
+        "method": "eth_call",
+        "simulatedGas": "37100"
+      },
+      "passed": true
+    },
+    {
+      "url": "https://eth.drpc.org",
+      "chainId": 1,
+      "contracts": [
+        {
+          "name": "LaunchToken",
+          "address": "0xc89131edc1ddf3503d2bd5f7e98a16c1c67fa17b",
+          "codeBytes": 1089
+        },
+        {
+          "name": "PimdRegistry",
+          "address": "0x785c8b3aa9b4dab5a717cbf5d3621549eb1320d2",
+          "codeBytes": 4781
+        },
+        {
+          "name": "BoundaryOracle",
+          "address": "0xd31937d81714fa50d20bdc8b77f043e784a5198d",
+          "codeBytes": 16990
+        },
+        {
+          "name": "PimdAbove",
+          "address": "0x8f52c85dba5226e79928907888941ec12a3ecbf6",
+          "codeBytes": 18521
+        },
+        {
+          "name": "StartOracle",
+          "address": "0x26fabc0cb123b4014e7fe0e102691cac352ec0a0",
+          "codeBytes": 12008
+        },
+        {
+          "name": "PimdSwap2",
+          "address": "0xab901e99d5853486bbd41b4308f306799108199f",
+          "codeBytes": 5969
+        }
+      ],
+      "above": {
+        "marketCount": "0",
+        "admin": "0x8Ad18E99F4C8d8406f9Ba8899CF308000518A981",
+        "owner": "0x3c587Eff6c96eAcF7E3dcC2CFf6416161386E48C",
+        "takerRate": "500",
+        "makerRate": "100",
+        "registry": "0x785c8b3aA9B4dAB5a717Cbf5D3621549eB1320d2",
+        "oracle": "0xD31937D81714fa50d20BdC8b77F043e784a5198D"
+      },
+      "assetCount": "1",
+      "periodCount": "4",
+      "quote": {
+        "input": "1 IMD",
+        "output": "388781.173762100528628734 pIMD",
+        "method": "eth_call",
+        "simulatedGas": "37100"
+      },
+      "passed": true
+    }
+  ]
+}

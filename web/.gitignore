@@ -1,0 +1,10 @@
+# Explicitly budgeted web/.gitignore; apply at every nesting level.
+node_modules/
+.npm/
+.cache/
+.vite/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+*.tgz

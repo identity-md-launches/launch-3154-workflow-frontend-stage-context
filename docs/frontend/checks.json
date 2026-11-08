@@ -1,0 +1,98 @@
+{
+  "recordedAt": "2026-11-08T17:57:32.689979+00:00",
+  "authority": "Worker-produced evidence only; not an independent certification.",
+  "typecheck": {
+    "command": "npm run typecheck --prefix web",
+    "exitCode": 0,
+    "runBy": "npm run build --prefix web"
+  },
+  "build": {
+    "command": "npm run build --prefix web",
+    "exitCode": 0,
+    "relativeBase": "./",
+    "warnings": [
+      "Rollup removed misplaced PURE annotations in transitive dependencies."
+    ]
+  },
+  "tests": {
+    "command": "npm run test --prefix web",
+    "exitCode": 0,
+    "passed": 9,
+    "failed": 0,
+    "mockedWalletTransactions": 18,
+    "liveTransactionsBroadcast": 0,
+    "durationMs": 7793.234831
+  },
+  "export": {
+    "command": "npm run verify --prefix web",
+    "exitCode": 0,
+    "contracts": 6,
+    "assets": 21,
+    "inventoriedBytes": 1567472,
+    "totalBytesWithManifest": 1573653,
+    "largestFileBytes": 675701,
+    "manifestSha256": "9c94d42cf700cc4a635575760698783b72109f800eb5d13588a13da54af8ee04",
+    "matchesPinnedHandoffAndNetwork": true
+  },
+  "liveRpc": {
+    "report": "live-rpc.json",
+    "broadcast": false,
+    "bothConfiguredEndpointsPassed": true,
+    "quoteMethod": "eth_call"
+  },
+  "sourceDesign": {
+    "report": "design-check.json",
+    "passingContrastPairs": 8,
+    "renderedMeasurement": false
+  },
+  "browser": {
+    "rendered": false,
+    "reports": [
+      "browser-report.json",
+      "taste-report.json"
+    ],
+    "failures": [
+      "Local Chromium startup SIGTRAP",
+      "Browser service initialization: Socket path too long",
+      "Firefox startup: could not locate application directory"
+    ],
+    "noViewportOrScreenshotPassClaimed": true
+  },
+  "localHttpPreview": {
+    "passed": false,
+    "failure": "502 upstream failure for minimal loopback HTTP request before request handler ran"
+  },
+  "untested": [
+    "Funded mainnet transactions",
+    "Full SPEC section 7 mainnet-fork suite",
+    "Real phone deep links and Coinbase passkeys",
+    "Actual rendered 320/390/1440 layouts, first-screen fold and overflow"
+  ],
+  "scope": {
+    "paths": [
+      "web/**",
+      "dist/**",
+      "docs/**",
+      "web/.gitignore"
+    ],
+    "designDocument": "docs/DESIGN.md",
+    "ignoreFileBudgetBytes": 1024,
+    "ignoreFileActualBytes": 166,
+    "submissionLimitBytes": 8388608,
+    "deployedSourceModified": false
+  },
+  "gitDelivery": {
+    "staged": false,
+    "committed": false,
+    "failure": "git add failed: unable to create .git/index.lock: Read-only file system",
+    "filesSavedInWorkingTree": true
+  },
+  "submissionBudget": {
+    "newFiles": 71,
+    "newFileBytes": 2225541,
+    "perFileBinaryPatchBytes": 2270084,
+    "method": "Sum of working-tree added files and their git diff --no-index --binary patches; staging unavailable.",
+    "allPathsAllowed": true,
+    "noDependencyCachesArchivesOrSubmodules": true
+  }
+}
