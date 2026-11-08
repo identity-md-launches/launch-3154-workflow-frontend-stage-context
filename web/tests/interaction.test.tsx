@@ -164,6 +164,12 @@ test("wallet, order, deposit, swap, oracle and error interactions with mocked EI
         ?.params[0],
       manifest.walletAddChain,
     );
+    // Market board rows carry each side's best book price, with explicit empty sides.
+    await wait(() => {
+      const row = w.document.querySelector(".market-row")!.textContent!;
+      assert.match(row, /Yes bid 0\.4 · ask no quote/);
+      assert.match(row, /No bid 0\.62 · ask no quote/);
+    });
     await user.type(screen.getByLabelText("Limit price (USDC)"), "0.4");
     await user.type(screen.getByLabelText("Shares"), "10");
     assert.ok(!(button("Review buy Yes") as HTMLButtonElement).disabled);
@@ -254,6 +260,28 @@ test("wallet, order, deposit, swap, oracle and error interactions with mocked EI
     await confirm();
     assert.equal(chain.state.writes.at(-1)?.functionName, "claim");
     assert.ok((button("Review buy No") as HTMLButtonElement).disabled);
+    // A confirmed receipt whose follow-up reads fail must not claim fresh balances.
+    const freeBefore = chain.state.free;
+    chain.state.failReadsAfterSend = true;
+    await user.click(button("Withdraw USDC"));
+    await wait(() => assert.ok(button("Confirm in wallet")));
+    await user.click(button("Confirm in wallet"));
+    await wait(() =>
+      assert.ok(
+        screen.getByText(
+          /Transaction confirmed in block .*Balance refresh failed/,
+        ),
+      ),
+    );
+    assert.equal(screen.queryByText(/Balances refreshed/), null);
+    assert.equal(chain.state.free, freeBefore - 5000000n);
+    chain.state.failReadsAfterSend = false;
+    chain.state.rpcError = false;
+    await user.click(button(/^Dismiss/));
+    await user.click(button("Retry connection"));
+    await wait(() =>
+      assert.equal(screen.queryByText("Retry connection"), null),
+    );
     await navigate("token");
     await wait(() => assert.ok(screen.getByLabelText("You pay (IMD)")));
     await user.type(screen.getByLabelText("You pay (IMD)"), "10");

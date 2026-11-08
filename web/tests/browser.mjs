@@ -201,6 +201,34 @@ try {
   await page.getByRole("button", { name: "Fixture wallet" }).click();
   await page.getByRole("heading", { name: "Place an order" }).waitFor();
   await page.getByText("IMD above $3", { exact: true }).waitFor();
+  await page.locator(".market-row", { hasText: "No bid 0.62" }).waitFor();
+  const row = await page.locator(".market-row").first().innerText();
+  assert.match(row, /Yes bid 0\.4 · ask no quote/);
+  assert.match(row, /No bid 0\.62 · ask no quote/);
+  await page.evaluate(() => scrollTo(0, 0));
+  const firstScreen = await page.evaluate(() => ({
+    header: document.querySelector("header").getBoundingClientRect().height,
+    button: document
+      .querySelector(".order-form button[type=submit]")
+      .getBoundingClientRect().bottom,
+  }));
+  report.checks.push({
+    name: `connected 390x844: header ${firstScreen.header}px, order button bottom ${firstScreen.button}px`,
+    passed: firstScreen.button <= 844,
+  });
+  assert.ok(
+    firstScreen.button <= 844,
+    "connected order button on first screen",
+  );
+  await page.setViewportSize({ width: 320, height: 844 });
+  assert.equal(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+    true,
+    "connected board overflow at 320",
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.getByLabel("Limit price (USDC)").fill("0.4");
   await page.getByLabel("Shares", { exact: true }).fill("10");
   await page.getByRole("button", { name: "Review buy Yes" }).click();

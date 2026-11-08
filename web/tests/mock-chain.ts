@@ -52,6 +52,8 @@ export function createMockChain() {
     revert: false,
     missingCode: false,
     rpcError: false,
+    // Simulates reads failing after a transaction is sent, while receipts still succeed.
+    failReadsAfterSend: false,
     empty: false,
     settled: false,
     ended: false,
@@ -337,6 +339,7 @@ export function createMockChain() {
           value: params[0].value,
         });
         state.lastTo = params[0].to;
+        if (state.failReadsAfterSend) state.rpcError = true;
         state.nonce++;
         if (fn === "approve") {
           if (params[0].to.toLowerCase() === protocol.permit2)

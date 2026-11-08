@@ -263,6 +263,46 @@ export function useMarkets(count: bigint | undefined, limit: number) {
     },
   });
 }
+// Best resting price per side for every market on the board, in `best(id, yes, buy)` order:
+// [Yes bid, Yes ask, No bid, No ask]. Settled markets have no book to quote.
+export type BoardQuotes = Record<string, (bigint | undefined)[] | undefined>;
+export function useBoardQuotes(markets?: Market[]) {
+  const r = useRuntime(),
+    s = useSession();
+  const open = (markets ?? []).filter((m) => m.outcome === 0);
+  return useQuery({
+    queryKey: ["boardQuotes", s.address, open.map((m) => m.id).join()],
+    enabled: s.correctChain && !!s.address && open.length > 0,
+    refetchInterval: 20000,
+    retry: 1,
+    queryFn: async () => {
+      const c = r.contract("PimdAbove"),
+        out: BoardQuotes = {};
+      for (let i = 0; i < open.length; i += 5)
+        await Promise.all(
+          open.slice(i, i + 5).map(async (m) => {
+            out[m.id] = await Promise.all(
+              [
+                [true, true],
+                [true, false],
+                [false, true],
+                [false, false],
+              ].map(async (flags) => {
+                const id = await read<bigint>(s.client, c, "best", [
+                  m.id,
+                  ...flags,
+                ]);
+                return id
+                  ? (await read<Order>(s.client, c, "order", [id])).price
+                  : undefined;
+              }),
+            );
+          }),
+        );
+      return out;
+    },
+  });
+}
 export function useMarketDetail(market?: Market) {
   const r = useRuntime(),
     s = useSession();
@@ -501,12 +541,20 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
         throw Error(
           "The transaction was replaced or cancelled. Check the explorer before retrying.",
         );
-      await query.invalidateQueries();
+      // A confirmed receipt stays confirmed; only claim fresh balances when every refetch succeeded.
+      const refreshed = await query
+        .invalidateQueries(undefined, { throwOnError: true })
+        .then(
+          () => true,
+          () => false,
+        );
       setState({
         phase: "success",
         label: spec.label,
         hash,
-        message: `Confirmed in block ${receipt.blockNumber}. Balances refreshed.`,
+        message: refreshed
+          ? `Confirmed in block ${receipt.blockNumber}. Balances refreshed.`
+          : `Transaction confirmed in block ${receipt.blockNumber}. Balance refresh failed, so balances shown may be out of date. Retry the failed reads or reload the page.`,
       });
     } catch (e) {
       setState({

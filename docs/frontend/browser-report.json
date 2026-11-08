@@ -1,9 +1,32 @@
 {
   "engine": "chromium",
-  "at": "2026-11-08T17:40:59.799Z",
-  "rendered": false,
-  "checks": [],
-  "limitations": [
-    "browserType.launch: Target page, context or browser has been closed"
-  ]
+  "at": "2026-11-08T18:28:53.126Z",
+  "rendered": true,
+  "checks": [
+    {
+      "name": "320px routes, resources, keyboard dialog, subpath",
+      "passed": true
+    },
+    {
+      "name": "390px routes, resources, keyboard dialog, subpath",
+      "passed": true
+    },
+    {
+      "name": "1440px routes, resources, keyboard dialog, subpath",
+      "passed": true
+    },
+    {
+      "name": "connected 390x844: header 121px, order button bottom 838.59375px",
+      "passed": true
+    },
+    {
+      "name": "EIP-6963 connect, unknown-chain add, order simulation/sign/receipt, balance guard",
+      "passed": true
+    },
+    {
+      "name": "four phone wallet links and bottom sheet",
+      "passed": true
+    }
+  ],
+  "limitations": []
 }

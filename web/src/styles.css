@@ -521,6 +521,27 @@ dd {
   font-size: var(--label);
   white-space: nowrap;
 }
+.row-prices {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  padding-inline-start: 28px;
+  font-size: var(--label);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.row-prices b {
+  color: var(--text);
+  font-weight: 600;
+}
+.market-row {
+  flex-wrap: wrap;
+}
+.board-unit {
+  font-size: var(--sm);
+  margin-bottom: 8px;
+}
 .rules-strip {
   padding: 24px 0;
   margin-top: 24px;
@@ -582,6 +603,7 @@ dd {
 .position-values dd small {
   display: inline;
   font-size: var(--label);
+  letter-spacing: normal;
 }
 .action-row {
   display: flex;
@@ -1132,6 +1154,6 @@ footer .brand {
 @media (min-width: 360px) and (max-width: 760px) {
   .site-header nav a {
     font-size: var(--sm);
-    padding-inline: 7px;
+    padding-inline: 5px;
   }
 }

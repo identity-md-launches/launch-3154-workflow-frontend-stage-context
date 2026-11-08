@@ -43,7 +43,7 @@ The local system stack is `Arial, Helvetica, sans-serif`; addresses and hashes u
 | `--title` | 28px | Mobile page heading and balance numerals |
 | `--display` | 36px | Desktop page heading |
 
-Authored weights are 400, 600 and 700. Page headings and branding use 700; section headings and buttons use 600. Body line height is 1.5, long prose 1.65 and headings 1.2. Only display headings and balance numerals have negative tracking. Prose is limited to 70ch. Inputs remain 16px on mobile. Numeric displays use tabular numerals. Full addresses, hashes and numeric balances wrap rather than being clipped. The wallet button uses a short address, with the full checksummed address and copy/explorer actions in its dialog. A selected market's full label and timestamp are also available in its details and transaction review.
+Authored weights are 400, 600 and 700. Page headings and branding use 700; section headings and buttons use 600. Body line height is 1.5, long prose 1.65 and headings 1.2. Only display headings and balance numerals have negative tracking; the small USDC unit beside a balance resets to normal tracking. Prose is limited to 70ch. Inputs remain 16px on mobile. Numeric displays use tabular numerals. Full addresses, hashes and numeric balances wrap rather than being clipped. The wallet button uses a short address, with the full checksummed address and copy/explorer actions in its dialog. A selected market's full label and timestamp are also available in its details and transaction review.
 
 ## Layout
 
@@ -51,12 +51,12 @@ Authored weights are 400, 600 and 700. Page headings and branding use 700; secti
 
 - Above uses `.market-layout`: a flexible market board and a 388px order panel, separated by 48px. At 1100px the panel is 360px and the gap is 28px.
 - At 760px and below the order panel comes first, followed by the market board. Main padding becomes 20px. Lower two-column sections and docs become one column. The book changes from four to two columns.
-- At 1100px the navigation moves to its own header row. At 360–760px its type is 13px; below 360px it uses three columns across two rows. No horizontal navigation scroller is required.
+- At 1100px the navigation moves to its own header row. At 360–760px its type is 13px with 5px inline padding, so all six links fit one row at 390px; below 360px it uses three columns across two rows. No horizontal navigation scroller is required.
 - At 359px and below main padding and the order panel use 16px insets; form-row gaps shrink to 8px. Text containers have `min-width: 0` where appropriate, and long critical strings wrap.
 - The expiry field is in a disclosure below the primary order action. Its default is 60 minutes, with the contract's five-minute execution minimum unchanged.
 - Wallet/review dialogs are centered at larger widths. Below 640px they align to the bottom, use a rounded top edge, respect the bottom safe area, and scroll internally if needed.
 
-These are source-defined behaviors. The provided rendered test covers 320, 390 and 1440 widths plus long values, but could not execute on this worker. No measured viewport claim is made.
+The rendered test (`web/tests/browser.mjs`) passed at 320, 390 and 1440 with no sideways scroll. With a mock wallet connected at 390×844 the header is 121px tall and the order button ends at 838.6px, inside the first screen.
 
 ## Elevation & Depth
 
@@ -77,7 +77,7 @@ Controls use 8px radii; the 24px-padded desktop trade panel and dialogs use 16px
 | `AddressText` | `web/src/ui.tsx:58` | Full checksummed address, explorer link and copy state. No ENS lookup is implemented. |
 | `Wallet` | `web/src/wallet.tsx:70` | EIP-6963 names/icons; generic browser fallback, mobile app rows and Coinbase Smart Wallet. Connected address dialog, disconnect, wrong-network switch and recoverable rejection. |
 | Order form | `web/src/Above.tsx` | Native outcome/direction/type controls, Max, balance validation, locks and estimates, review action, expiry disclosure. No control relies only on color. |
-| Market/book/order rows | `web/src/Above.tsx` | Shared aligned numeric data. The token filter preserves markets pinned to old versions. Open orders retain their locks and expiry states until chain reads change. |
+| Market/book/order rows | `web/src/Above.tsx` | Shared aligned numeric data. Each open market row has a full-width `.row-prices` line: Yes and No best bid and ask in USDC per share, 14px tabular numerals, side names at 600 weight, “no quote” for an empty side, plus loading and error text. The token filter preserves markets pinned to old versions. Open orders retain their locks and expiry states until chain reads change. |
 | Swap panel | `web/src/Token.tsx` | Quote/loading/error/expired states; one approval or swap action at a time; minimum output and rate in token units. |
 | `TransactionProvider` | `web/src/context.tsx:363` | Simulation → review → signing → submitted → receipt/refetch. Persistent rejection/revert/timeout/replacement messages and explorer link. |
 
@@ -91,4 +91,4 @@ Hover treatments are gated by `(hover: hover)`. Motion is gated by `(prefers-red
 - Reuse semantic colors, the six type sizes and native controls. Keep the page heading the heaviest content heading.
 - Preserve word labels for outcome, status and error states. Keep long addresses and amounts accessible in full.
 - Do not add remote fonts, analytics, frames or scripts before Connect, local persistence of orders, an invented Up/Down deployment, or a call to v1.
-- After any source/export change rebuild the manifest, run the validation suite and perform the outstanding real-browser checks in a runtime that can start an engine.
+- After any source/export change rebuild the manifest and run `npm test`, `npm run test:browser` and the taste probe.

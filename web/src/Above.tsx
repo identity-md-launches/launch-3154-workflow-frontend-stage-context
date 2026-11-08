@@ -4,6 +4,7 @@ import {
   useLaunch,
   useMarkets,
   useMarketDetail,
+  useBoardQuotes,
   useRuntime,
   useTx,
   useToken,
@@ -40,6 +41,7 @@ export function Above({ launch }: { launch: LaunchState }) {
     ) || [];
   const market = visible.find((m) => m.id === selected) ?? visible[0];
   const detail = useMarketDetail(market);
+  const quotes = useBoardQuotes(visible);
   const ready =
     !!launch.data && !launch.isError && account.chainId === r.chain.id;
   return (
@@ -118,15 +120,27 @@ export function Above({ launch }: { launch: LaunchState }) {
             </Empty>
           ) : (
             <div className="market-rows">
+              <p className="muted board-unit">
+                Best Yes and No bid and ask in USDC per share. 0.4 means 40%.
+              </p>
               {visible.map((m) => (
                 <MarketRow
                   key={m.id}
                   market={m}
                   selected={m.id === market?.id}
                   select={() => setSelected(m.id)}
+                  quotes={quotes}
                 />
               ))}
             </div>
+          )}
+          {quotes.isError && (
+            <Notice error>
+              Board prices did not load. {errorMessage(quotes.error)}{" "}
+              <button onClick={() => void quotes.refetch()}>
+                Reload prices
+              </button>
+            </Notice>
           )}
           {launch.data && BigInt(limit) < launch.data.marketCount && (
             <button className="full" onClick={() => setLimit((v) => v + 20)}>
@@ -334,12 +348,13 @@ function MarketRow({
   market: m,
   selected,
   select,
+  quotes,
 }: {
   market: Market;
   selected: boolean;
   select: () => void;
+  quotes: ReturnType<typeof useBoardQuotes>;
 }) {
-  const r = useRuntime();
   return (
     <button
       className={`market-row ${selected ? "selected" : ""}`}
@@ -357,9 +372,24 @@ function MarketRow({
         {["Open", "Yes wins", "No wins", "Half each"][m.outcome]}
         <span aria-hidden="true"> ↗</span>
       </span>
+      {m.outcome === 0 && (
+        <span className="row-prices">
+          {(["Yes", "No"] as const).map((side, i) => (
+            <span key={side}>
+              <b className={side === "Yes" ? "yes" : "no"}>{side}</b>{" "}
+              {quotes.isError
+                ? "prices unavailable"
+                : !quotes.data
+                  ? "loading prices…"
+                  : `bid ${quote(quotes.data[m.id]?.[i * 2])} · ask ${quote(quotes.data[m.id]?.[i * 2 + 1])}`}
+            </span>
+          ))}
+        </span>
+      )}
     </button>
   );
 }
+const quote = (p?: bigint) => (p ? fmt(p) : "no quote");
 function TradeForm({
   market,
   launch,
